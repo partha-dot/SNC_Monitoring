@@ -1,0 +1,119 @@
+<div class="grid">
+
+	<div class="col-12">
+		<div class="card">
+			<h5>Stock-In</h5>
+			<form [formGroup]="stockIn">
+				<div class="p-fluid p-formgrid grid">
+					<div class="field col-12 md:col-4">
+						<label htmlFor="firstname2">Select model</label>
+						<p-autoComplete [(ngModel)]="selectedCountryAdvanced" [ngModelOptions]="{standalone: true}" (onSelect)="selected()" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="model_name" [dropdown]="true">
+						</p-autoComplete>
+					</div>
+					<div class="field col-12 md:col-4">
+						<label htmlFor="firstname2">Product Name</label>
+						<input pInputText [(ngModel)]="product_n" [ngModelOptions]="{standalone: true}" id="firstname2" type="text" />
+					</div>
+					<div class="field col-12 md:col-4">
+						<label htmlFor="lastname2">Company Name</label>
+						<input pInputText [(ngModel)]="company_n" [ngModelOptions]="{standalone: true}" id="lastname2" type="text" />
+					</div>
+					<div class="field col-12 md:col-4">
+						<label htmlFor="firstname2">Select Seller</label>
+						<p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" (onSelect)="setDealer()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="shop_name" [dropdown]="true">
+						</p-autoComplete>
+					</div>
+					<!-- <div class="field col-12 md:col-2">
+						<label htmlFor="city">Purchase By</label>
+						<p-inputNumber  formControlName="purchase_by"  locale="en-IN"> </p-inputNumber>
+					</div> -->
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Purchase Price</label>
+						<p-inputNumber  mode="currency" formControlName="purchase_rate" inputId="currency-india" currency="INR" currencyDisplay="code" locale="en-IN"> </p-inputNumber>
+					</div>
+					
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Purchase Date</label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" formControlName="purchase_date" (onSelect)="setWarranty()" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Waranty in Month</label>
+						<p-inputNumber [(ngModel)]="warr_in_month" inputId="percent" [ngModelOptions]="{standalone: true}" (ngModelChange)="setWarranty()" > </p-inputNumber>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Warranty Expired</label>
+						<span class="p-input-icon-right">
+						<p-calendar dateFormat="dd/mm/yy" formControlName="warranty_expired" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">CGST</label>
+						<p-inputNumber formControlName="cgst_p" inputId="percent" prefix="%"> </p-inputNumber>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">SGST</label>
+						<p-inputNumber formControlName="sgst_p" inputId="percent" prefix="%"> </p-inputNumber>
+					</div>
+					<div class="field col-12 md:col-2">
+						<label htmlFor="city">Selling Price</label>
+						<p-inputNumber  formControlName="sales_rate" mode="currency" inputId="currency-india" currency="INR" currencyDisplay="code" locale="en-IN"> </p-inputNumber>
+					</div>
+					<!-- <div class="field col-12 md:col-2">
+						<label htmlFor="city">Sale Warranty</label>
+						<span class="p-input-icon-right">
+						<p-calendar  formControlName="sels_warranty" [showButtonBar]="true"></p-calendar>
+						<i class="pi pi-calendar"></i>
+						</span>
+					</div> -->
+					
+					<div class="field col-12 md:col-12" >
+						<div class="card">
+							<h5>Scan Barcode</h5>
+							<div class="formgroup-inline">
+								<div class="field col-12 md:col-2" style="margin-top: 2%;">
+									<p-button   styleClass="p-button-primary " label="Add Item"  (click)="addSkill() " icon="pi pi-plus" ></p-button>
+								</div>
+								<div class="field col-12 md:col-8" >
+								<div class="field">
+									<div formArrayName="sl_no">
+										<div *ngFor="let skill of skillsFormArray.controls; let i = index" >
+											<label for="skill{{i}}">Serial No {{i + 1}}:</label>
+											<div class="p-inputgroup">
+												<!-- [id]="'itemInput'+i" -->
+												<input #itemInput pInputText type="text" pAutoFocus [formControlName]="i"  [autofocus]="true" (keyup)="addItem($event)" >
+												  <p-button  (click)="removeSkill(i)"  icon="pi pi-times" styleClass="p-button-danger"></p-button>
+											</div>
+											
+										</div>
+									  </div>
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="field col-12 md:col-2" >
+
+						<p-button icon="pi pi-check" [disabled]="skillsFormArray.length==0" (click)="insertStockData()" styleClass="p-button-primary " label="Save"></p-button>
+					
+					</div>
+					<div class="field col-12 md:col-2" >
+						<p-button icon="pi pi-refresh" (click)="resetData()" styleClass="p-button-danger" label="Reset"></p-button>
+
+					</div>
+					  <!-- <button type="button" (click)="addSkill()">Add Skill</button> -->
+					  <!-- <p-button label="Submit" icon="pi pi-check" styleClass="p-button-success"></p-button> -->
+					  <!-- <button type="submit" [disabled]="stockIn.invalid">Submit</button> -->
+					
+				</div>
+			</form>
+			
+		</div>
+	</div>
+</div>
+<p-toast></p-toast>
+<div *ngIf="spinner" class="spinner_overlay"><p-progressSpinner></p-progressSpinner></div>

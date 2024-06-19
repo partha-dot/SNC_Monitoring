@@ -1,0 +1,110 @@
+<div class="grid">
+	<div class="col-12 md:col-12">
+		<div class="card">
+			<h5>Bill Generate</h5>
+			<form [formGroup]="G_Bill">
+				<div class="p-fluid p-formgrid grid">
+					
+					<div class="field col-12 md:col-2">
+						<label htmlFor="firstname2">Mobile Number</label>
+						<!-- <p-inputNumber formControlName="p_num" (change)="getCustomerDtls()" prefix="+91"> </p-inputNumber> -->
+						<input pInputText type="number" formControlName="p_num" (change)="getCustomerDtls($event)"/>
+					</div>
+					<div class="field col-12 md:col-4">
+						<label htmlFor="lastname2">Customer Name</label>
+						<input pInputText  type="text" formControlName="c_name"/>
+					</div>
+					
+					<div class="field col-12 md:col-6">
+						<label htmlFor="city">Address</label>
+						<textarea rows="1" cols="30" pInputTextarea formControlName="c_add"></textarea>
+					</div>
+					<div class="field col-12 md:col-12" >
+						<div class="card">
+							<h5>Scan Barcode</h5>
+							<input #itemInput pInputText type="text" pAutoFocus formControlName="bar_code" [autofocus]="true" (keyup)="searchProduct($event)">
+						
+							<!-- <h5>Product List</h5> -->
+								<div formArrayName="sl_no">
+									<div *ngFor="let skill of skillsFormArray.controls; let i = index" [formGroupName]="i">
+										<h5 for="skill{{i}}">Item No {{i + 1}}:</h5>
+										<div class="p-fluid p-formgrid grid">
+											<div class="field col-12 md:col-2" >
+												<label>Company Name</label>
+												<input #itemInput pInputText type="text" formControlName="company_name" >
+											</div>
+											<div class="field col-12 md:col-2" >
+												<label>Product Name</label>
+												<input #itemInput pInputText type="text" formControlName="product_name" >
+											</div>
+											<div class="field col-12 md:col-2" >
+												<label>Model Name</label>
+												<input #itemInput pInputText type="text" formControlName="model_name" >
+											</div>
+											<div class="field col-12 md:col-2" >
+												<label>Barcode Number</label>
+												<input #itemInput pInputText type="text" formControlName="barcode_no" >
+											</div>
+											<div class="field col-12 md:col-1" >
+												<label>Price(₹)</label>
+												<input #itemInput pInputText type="text" formControlName="price" (change)="priceChange($event, i)">
+											</div>
+											<div class="field col-12 md:col-1" >
+												<label>Disc.(%)</label>
+												<input #itemInput pInputText type="text" formControlName="discount" (change)="disChange($event, i)">
+											</div>
+											<div class="field col-12 md:col-1" >
+												<label>Warranty</label>
+												<input #itemInput pInputText type="text" formControlName="warranty" >
+											</div>
+											  <div class="field col-12 md:col-1">
+												<label>Remove</label>
+												<p-button (click)="removeSkill(i)"  icon="pi pi-times" styleClass="p-button-danger"></p-button>
+											  </div>
+										
+										</div>
+									</div>
+
+								  </div>
+						</div>
+					</div>
+					
+						
+						<div class="field col-12 md:col-2" >
+							<div *ngFor="let category of categories" class="field-checkbox">
+								<p-radioButton [inputId]="category.name" [value]="category.name" formControlName="paid_status" [ariaChecked]="setTotPrice()"></p-radioButton>
+								<label [for]="category.name" class="ml-2">{{ category.name }}</label>
+							</div>
+						</div>
+						<div class="field col-12 md:col-2">
+							<label>Total Amount:</label>
+							<input id="disabled-input"  pInputText type="text" formControlName="total_amt" [disabled]="true" >
+						</div>
+						<div class="field col-12 md:col-2">
+							<label>Paid Amount:</label>
+							<p-inputNumber inputId="integeronly" [disabled]="fullPaid" formControlName="paid_amt"></p-inputNumber>
+							<!-- <input #itemInput pInputText inputId="integeronly" type="text" formControlName="paid_amt" > -->
+						</div>
+						<div class="field col-12 md:col-2" style="margin-top: 2%;">
+							<p-button icon="pi pi-check" [disabled]="skillsFormArray.length==0" (click)="saveData()" styleClass="p-button-primary " label="Save"></p-button>
+						</div>
+						<div class="field col-12 md:col-2" style="margin-top: 2%;">
+							<p-button icon="pi pi-refresh" (click)="resetData()" styleClass="p-button-danger" label="Reset"></p-button>
+						</div>
+						<!-- <div class="field col-12 md:col-2" style="margin-top: 2%;" *ngIf="!showPrintButton">
+							<p-button icon="pi pi-print" (click)="show()" styleClass="p-button-primary" label="Print Bill"></p-button>
+						</div> -->
+						
+					
+					
+					
+					
+				</div>
+			</form>
+		</div>
+
+		
+	</div>
+</div>
+<p-toast></p-toast>
+<div *ngIf="spinner" class="spinner_overlay"><p-progressSpinner></p-progressSpinner></div>

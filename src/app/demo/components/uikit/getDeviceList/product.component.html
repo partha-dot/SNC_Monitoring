@@ -1,0 +1,114 @@
+<div class="card">
+    <p-toast></p-toast>
+    <p-toolbar styleClass="mb-4 gap-2">
+        <!--  -->
+
+        <ng-template pTemplate="right">
+            <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+            <button pButton pRipple label="Export as Excel" icon="pi pi-upload"  (click)="exportToExcel()" class="p-button-help"></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button pButton pRipple label="Retrive" icon="pi pi-angle-double-down"  (click)="openNew()" class="p-button-help"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <!-- <p-table
+        #dt
+        [value]="products"
+        [rows]="4"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedProducts"
+        [rowHover]="true"
+        dataKey="product_id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+    > -->
+	<p-table
+	#dt
+	[value]="products"
+	[rows]="20"
+	[paginator]="true"
+	[globalFilterFields]="['device_id', 'date', 'rpm', 'flow']"
+	[tableStyle]="{ 'min-width': '75rem' }"
+	[(selection)]="selectedProducts"
+	[rowHover]="true"
+	dataKey="product_id"
+	currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	[showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Device Details</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"  placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+				<th pSortableColumn="data_id">Sl No. <p-sortIcon field="data_id"></p-sortIcon></th>
+				<th pSortableColumn="date" style="width: 8%;">DATE <p-sortIcon field="date"></p-sortIcon></th>
+				<th pSortableColumn="time">TIME <p-sortIcon field="time"></p-sortIcon></th>
+				<th>DEVICE ID</th>
+				<th style="text-align: center;">DC BUS VOLTAGE(V)</th>
+				<th style="text-align: center;">OUTPUT CURRENT(A)</th>
+				<th style="text-align: center;">SETTINGS FREQ.(HZ)</th>
+				<th style="text-align: center;">RUNNING FREQ.(HZ)</th>
+				<th pSortableColumn="rpm">RPM <p-sortIcon field="rpm"></p-sortIcon></th>
+                <th pSortableColumn="flow">FLOW (%) <p-sortIcon field="flow"></p-sortIcon></th>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowIndex="rowIndex" let-product >
+            <tr>
+                <td> {{rowIndex+1}}</td>
+                <td>{{ product.date }}</td>
+                <td>{{ product.time }}</td>
+                <td>{{ product.device_id }}</td>
+                <td style="text-align: center;">{{ product.dc_bus_voltage }}</td>
+                <td style="text-align: center;">{{ product.output_current }}</td>
+                <td style="text-align: center;">{{ product.settings_freq/100 }}</td>
+                <td style="text-align: center;">{{ product.running_freq/100 }}</td>
+                <td>{{ product.rpm }}</td>
+                <td>{{ product.flow }}</td>
+            </tr>
+           
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">In total there are {{ products ? products.length : 0 }} products.</div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Device Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-fluid p-formgrid grid">
+        <form  [formGroup]="reportData" style="width: 100%;">
+            <div class="field col-12 md:col-12">
+                <p-dropdown [options]="cities" [(ngModel)]="selectedDevice" formControlName="d_id"   optionLabel="device_name" [showClear]="true" placeholder="Select a Device"></p-dropdown>
+            </div>
+
+                <div class="field col-12 md:col-12">
+                    <div class="flex-auto">
+                        <label for="icondisplay" class=" mb-2"> Form Date </label>
+                       <input type="date" class="datefield" formControlName="fdate" />
+                    </div>
+                    <br>
+                    <div class="flex-auto">
+                        <label for="icondisplay" class=" mb-2"> To Date </label>
+                        <input type="date" class="datefield" formControlName="tdate" />
+                    </div>
+                </div>
+        </form>
+        </div>
+       
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Submit" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog> 
+<div *ngIf="spinner" class="spinner_overlay"><p-progressSpinner></p-progressSpinner></div>

@@ -1,0 +1,16 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>BARCODE</h5>
+            <button pButton pRipple printSectionId="bbc" [useExistingCss]="true" ngxPrint   label="Print" icon="pi pi-print" class="p-button-primary"></button>
+
+            <div id="bbc">
+                <!-- <svg #barcodeSVG ></svg> -->
+                <!-- <div #barcodeContainer></div> -->
+                <div class="grid-container">
+                    <div *ngFor="let containerId of containerIds" [id]="containerId" class="grid-item"></div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
