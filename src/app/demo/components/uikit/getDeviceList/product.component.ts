@@ -62,7 +62,7 @@ export class ProductComponent implements OnInit{
     });
   this.getDeviceDATA();
   this.openNew();
- 
+
   setInterval(() => {
     this.device ? this.saveProduct() : console.log('No Data');
   }, 10000);
@@ -80,10 +80,10 @@ const apiUrl = this.api.baseUrl;
   this.http.get(apiUrl+this.DeviceUrl+'device/list', { headers }).subscribe(
       (response) => {
         console.log(response);
-        
+
         this.data2=response
-        this.cities=this.data2.data 
-        
+        this.cities=this.data2.data
+
       },
       (error) => {
         console.error(error);
@@ -122,7 +122,7 @@ const apiUrl = this.api.baseUrl;
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
               this.DeleteCompany(product.user_id);
-          
+
           }
       });
   }
@@ -131,13 +131,13 @@ const apiUrl = this.api.baseUrl;
       this.productDialog = false;
       this.submitted = false;
   }
-  
+
 
   saveProduct() {
     this.fromDate='';
     this.toDate='';
     this.device='';
-    
+
       this.submitted = true;
       this.selectedDevice;
       this.device=this.reportData.controls['d_id'].value.device_name;
@@ -155,7 +155,7 @@ const apiUrl = this.api.baseUrl;
       const apiUrl = this.api.baseUrl;
       const token = localStorage.getItem('token');
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
-      
+
       this.productDialog = false;
       this.http.post(apiUrl+this.DeviceUrl+'device-data/list', credentials,{ headers }).subscribe(
         (response) => {
@@ -167,21 +167,21 @@ const apiUrl = this.api.baseUrl;
             e.time=this.convertToISTDateTime(e.created_at)
           })
           this.products = [...this.products];
-          
+
           this.product = {};
-          
+
           // this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Get All Data', life: 3000 });
-          
+
         },
         (error) => {
-        
+
           console.error(error);
         }
       );
-      
+
   }
 
-  
+
 
 
   updateCompany(id,name){
@@ -192,11 +192,11 @@ const apiUrl = this.api.baseUrl;
       const apiUrl = this.api.baseUrl;
       const token = localStorage.getItem('token');
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
-      
+
       this.http.post(apiUrl+'/master/edit_product_name', credentials,{ headers }).subscribe(
           (response) => {
             console.log(response);
-            
+
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Company Updated', life: 3000 });
             this.getDeviceDATA();
           },
@@ -204,7 +204,7 @@ const apiUrl = this.api.baseUrl;
             console.error(error);
           }
         );
-  } 
+  }
   AddCompany(name){
       const credentials = {
           product_name:name
@@ -212,11 +212,11 @@ const apiUrl = this.api.baseUrl;
       const apiUrl = this.api.baseUrl;
       const token = localStorage.getItem('token');
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
-      
+
       this.http.post(apiUrl+'/master/add_product_name', credentials,{ headers }).subscribe(
           (response) => {
             console.log(response);
-            
+
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Company Created', life: 3000 });
             this.getDeviceDATA();
           },
@@ -224,7 +224,7 @@ const apiUrl = this.api.baseUrl;
             console.error(error);
           }
         );
-  }   
+  }
   DeleteCompany(id){
       const credentials = {
           product_id:id
@@ -232,11 +232,11 @@ const apiUrl = this.api.baseUrl;
       const apiUrl = this.api.baseUrl;
       const token = localStorage.getItem('token');
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
-      
+
       this.http.post(apiUrl+'/master/delete_product_name', credentials,{ headers }).subscribe(
           (response) => {
             console.log(response);
-            
+
             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Company Deleted', life: 3000 });
             this.getDeviceDATA();
           },
@@ -247,11 +247,12 @@ const apiUrl = this.api.baseUrl;
   }
   exportToExcel() {
     const data: any[] = []; // Your table data array
-  
+
     // Add header row
-    const header = ['Sl No.', 'DATE', 'TIME', 'DEVICE ID', 'DC BUS VOLTAGE (V)', 'OUTPUT CURRENT (A)', 'SETTINGS FREQ. (HZ)', 'RUNNING FREQ. (HZ)', 'RPM', 'FLOW (%)'];
+    const header = ['Sl No.', 'DATE', 'TIME', 'DEVICE ID', 'DC BUS VOLTAGE (V)', 'MOTOR CURRENT (A)', 'MOTOR VOLTAGE(V)', 'RUNNING FREQ. (HZ)', 'RPM', 'FLOW (%)'];
+    // const header = ['Sl No.', 'DATE', 'TIME', 'DEVICE ID', 'DC BUS VOLTAGE (V)', 'MOTOR CURRENT (A)', 'MOTOR VOLTAGE(V)', 'RUNNING FREQ. (HZ)','RPM'];
     data.push(header);
-  
+
     // Add data rows
     for (let i = 0; i < this.products.length; i++) {
       const rowData = [
@@ -268,16 +269,16 @@ const apiUrl = this.api.baseUrl;
       ];
       data.push(rowData);
     }
-  
+
     // Create a worksheet
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
-  
+
     // Create a workbook
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  
+
     // Save the workbook as an Excel file
     XLSX.writeFile(wb, 'Report_data.xlsx');
   }
-  
+
 }

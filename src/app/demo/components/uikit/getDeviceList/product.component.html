@@ -52,12 +52,12 @@
 				<th pSortableColumn="time">TIME <p-sortIcon field="time"></p-sortIcon></th>
 				<th>DEVICE ID</th>
 				<th style="text-align: center;">DC BUS VOLTAGE(V)</th>
-				<th style="text-align: center;">OUTPUT CURRENT(A)</th>
-				<th style="text-align: center;">SETTINGS FREQ.(HZ)</th>
+				<th style="text-align: center;">MOTOR CURRENT(A)</th>
+				<th style="text-align: center;">MOTOR VOLTAGE(V)</th>
 				<th style="text-align: center;">RUNNING FREQ.(HZ)</th>
 				<th pSortableColumn="rpm">RPM <p-sortIcon field="rpm"></p-sortIcon></th>
                 <th pSortableColumn="flow">FLOW (%) <p-sortIcon field="flow"></p-sortIcon></th>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowIndex="rowIndex" let-product >
@@ -68,12 +68,12 @@
                 <td>{{ product.device_id }}</td>
                 <td style="text-align: center;">{{ product.dc_bus_voltage }}</td>
                 <td style="text-align: center;">{{ product.output_current }}</td>
-                <td style="text-align: center;">{{ product.settings_freq/100 }}</td>
-                <td style="text-align: center;">{{ product.running_freq/100 }}</td>
+                <td style="text-align: center;">{{ product.settings_freq}}</td>
+                <td style="text-align: center;">{{ product.running_freq}}</td>
                 <td>{{ product.rpm }}</td>
                 <td>{{ product.flow }}</td>
             </tr>
-           
+
         </ng-template>
         <ng-template pTemplate="summary">
             <div class="flex align-items-center justify-content-between">In total there are {{ products ? products.length : 0 }} products.</div>
@@ -101,7 +101,7 @@
                 </div>
         </form>
         </div>
-       
+
     </ng-template>
 
     <ng-template pTemplate="footer">
@@ -110,5 +110,5 @@
     </ng-template>
 </p-dialog>
 
-<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog> 
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>
 <div *ngIf="spinner" class="spinner_overlay"><p-progressSpinner></p-progressSpinner></div>

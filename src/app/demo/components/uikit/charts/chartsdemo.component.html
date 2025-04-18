@@ -5,7 +5,7 @@
                 <div class="field col-12 md:col-3">
                     <label htmlFor="lastname2">Site Name</label>
                     <input pInputText  type="text" />
-                </div>  
+                </div>
                 <div class="field col-12 md:col-2">
                     <label htmlFor="lastname2">Capacity (HP)</label>
                     <input pInputText  type="text" />
@@ -24,9 +24,9 @@
                 <div class="field col-12 md:col-1" style="margin-top: 2%;">
                     <p-button styleClass="p-button-primary " label="Update"></p-button>
                 </div>
-                
+
             </div>
-           
+
         </div>
 
     </div>
@@ -34,7 +34,7 @@
     <div class="col-12 lg:col-12">
     <div class="card" style="padding: 0!important;">
         <div class="grid" style="margin-left: 0rem!important;">
-           
+
             <div class="col-12 lg:col-2 xl:col-1">
                 <div class="livenow">
                   <div></div>
@@ -45,7 +45,7 @@
             <button pButton pRipple label="Online" class="p-button-success" *ngIf="deviceStatus"></button>
             <button pButton pRipple label="Offline" class="p-button-secondary" *ngIf="!deviceStatus"></button>
             </div>
-           
+
            <div class="col-12 lg:col-2 xl:col-5">
             <h4 style=" margin-top: 32px;">Last Updated: {{lastUpdateTime}}</h4></div>
            <!-- <div class="col-12 lg:col-1 xl:col-1">
@@ -56,12 +56,12 @@
             <label>&nbsp;</label>
             <p-autoComplete [(ngModel)]="selectedDealer" [ngModelOptions]="{standalone: true}" placeholder="Device Id" (onSelect)="setDevice()" [suggestions]="filteredDealer" (completeMethod)="filterDealer($event)" field="device_name" [dropdown]="true">
             </p-autoComplete>
-        </div> 
-        </div> 
+        </div>
+        </div>
     </div>
-        
-          
-       
+
+
+
         <div class="grid" style="margin-left: 0rem!important;">
             <div class="col-12 lg:col-6 xl:col-4">
                 <div class="card mb-0 xcard">
@@ -71,16 +71,16 @@
                             <div class="text-900 font-medium text-xl">{{liveData2?liveData2.dc_bus_voltage:0}} V</div>
                         </div>
                         <img src="assets/demo/images/access/current2.png" alt="logo" class="xxx">
-                        
+
                     </div>
-                    
+
                 </div>
             </div>
             <div class="col-12 lg:col-6 xl:col-4">
                 <div class="card mb-0 xcard">
                     <div class="flex justify-content-between mb-3">
                         <div>
-                            <span class="block text-500 font-medium mb-3">Output Current</span>
+                            <span class="block text-500 font-medium mb-3">Motor Current</span>
                             <div class="text-900 font-medium text-xl"> {{liveData2?liveData2.output_current:0}} A</div>
                         </div>
                         <img src="assets/demo/images/access/current2.png" alt="logo" class="xxx">
@@ -104,12 +104,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 lg:col-6 xl:col-3">
+            <div class="col-12 lg:col-6 xl:col-4">
                 <div class="card mb-0 xcard">
                     <div class="flex justify-content-between mb-3">
                         <div>
-                            <span class="block text-500 font-medium mb-3">Settings Frequency</span>
-                            <div class="text-900 font-medium text-xl">{{liveData2?liveData2.settings_freq/100:0}}  Hz</div>
+                            <span class="block text-500 font-medium mb-3">Motor Voltage</span>
+                            <div class="text-900 font-medium text-xl">{{liveData2?liveData2.settings_freq:0}}  V</div>
                         </div>
                         <img src="assets/demo/images/access/freq_setting2.png" alt="logo" class="xxx">
                         <!-- <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
@@ -118,12 +118,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 lg:col-6 xl:col-3">
+            <div class="col-12 lg:col-6 xl:col-4">
                 <div class="card mb-0 xcard">
                     <div class="flex justify-content-between mb-3">
                         <div>
                             <span class="block text-500 font-medium mb-3">Running Frequency</span>
-                            <div class="text-900 font-medium text-xl">{{liveData2?liveData2.running_freq/100:0}}  Hz</div>
+                            <div class="text-900 font-medium text-xl">{{liveData2?liveData2.running_freq:0}}  Hz</div>
                         </div>
                         <img src="assets/demo/images/access/freq_run2.png" alt="logo" class="xxx">
                         <!-- <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 lg:col-6 xl:col-3">
+            <div class="col-12 lg:col-6 xl:col-4">
                 <div class="card mb-0 xcard">
                     <div class="flex justify-content-between mb-3">
                         <div>
@@ -146,8 +146,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 lg:col-6 xl:col-3">
-               
+            <!-- <div class="col-12 lg:col-6 xl:col-3">
+
                 <div class="card mb-0 xcard">
                     <div class="flex justify-content-between mb-3">
                         <div>
@@ -155,12 +155,12 @@
                             <div class="text-900 font-medium text-xl">{{liveData2?liveData2.time:0}}</div>
                         </div>
                         <img src="assets/demo/images/access/time-icon2.png" alt="logo" class="xxx">
-                        
+
                     </div>
-                </div> 
-            </div>
-            
-            
+                </div>
+            </div> -->
+
+
             </div>
 
     </div>
